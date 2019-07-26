@@ -13,6 +13,8 @@ import Button from '../common/Button';
 import Input from '../common/Input';
 import Title from '../common/Title';
 
+import { goLogin } from '../../navigation'
+
 export default class SignUp extends React.PureComponent {
     state = {
         username: '',
@@ -32,23 +34,24 @@ export default class SignUp extends React.PureComponent {
     };
 
     onPressLogin = () => {
+        goLogin()
     };
 
     onPressSignUp = () => {
     };
 
-    renderButtons() {
-        if (this.props.auth.loading) {
-            return <ActivityIndicator />
-        } else {
-            return (
-                <View>
-                    <Button textButton='Login' onPress={this.onPressLogin} />
-                    <Button textButton='Signup' onPress={this.onPressSignUp} />
-                </View>
-            )
-        }
-    };
+    // renderButtons() {
+    //     if (this.props.auth.loading) {
+    //         return <ActivityIndicator />
+    //     } else {
+    //         return (
+    //             <View>
+    //                 <Button textButton='Login' onPress={this.onPressLogin} />
+    //                 <Button textButton='Signup' onPress={this.onPressSignUp} />
+    //             </View>
+    //         )
+    //     }
+    // };
 
     render() {
         const { username, password } = this.state
@@ -66,7 +69,9 @@ export default class SignUp extends React.PureComponent {
                     value={password}
                 />
                 <Button textButton='Sign Up' onPress={this.onPressSignUp} />
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={this.onPressLogin}
+                >
                     <View>
                         <Text>
                             {'Already got an account, take me back!'}

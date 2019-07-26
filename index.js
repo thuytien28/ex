@@ -7,35 +7,24 @@
 // import {name as appName} from './app.json';
 
 // AppRegistry.registerComponent(appName, () => App);
-// import './app/Main'
+import './app/App'
 
-import { Navigation } from 'react-native-navigation';
-import { registerScreens } from './app/screens';
+// import { Navigation } from 'react-native-navigation';
+// import { registerScreens } from './app/screens';
 
-registerScreens();
+// registerScreens();
 
-Navigation.events().registerAppLaunchedListener(() => {
-    Navigation.setRoot({
-        root: {
-            component: {
-                name: 'Login',
-                options: {
-                    topBar: {
-                        visible: false
-                    }
-                }
-            }
-        },
-        // root: {
-        //     stack: {
-        //         children: [
-        //             {
-        //                 component: {
-        //                     name:'Login'
-        //                 }
-        //             }
-        //         ]
-        //     }
-        // }
-    });
-});
+// Navigation.events().registerAppLaunchedListener(() => {
+//     Navigation.setRoot({
+//         root: {
+//             component: {
+//                 name: 'Login',
+//                 options: {
+//                     topBar: {
+//                         visible: false
+//                     }
+//                 }
+//             }
+//         },
+//     });
+// });

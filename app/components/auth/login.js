@@ -14,6 +14,8 @@ import Input from '../common/Input';
 import Title from '../common/Title';
 import { loginUser } from '../../actions/AuthActions';
 
+import { goSignUp } from '../../navigation'
+
 export default class Login extends React.PureComponent {
     static propTypes = {
         componentId: PropTypes.string.isRequired,
@@ -44,12 +46,13 @@ export default class Login extends React.PureComponent {
     };
 
     onPressSignUp = () => {
-        alert('abc')
+        // alert('abc')
         const { componentId } = this.props;
-
+        // console.warn(componentId);
+        goSignUp()
         Navigation.push(componentId, {
             component: {
-                name: 'signup',
+                name: 'SignUp',
                 passProps: {
                 },
             },
