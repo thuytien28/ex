@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {
     StyleSheet,
     View,
-    Text,
     ActivityIndicator,
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
@@ -13,10 +12,9 @@ import Button from '../common/Button';
 import Input from '../common/Input';
 import Title from '../common/Title';
 import { loginUser } from '../../actions/AuthActions';
+import * as actions from '../../actions/AuthActions';
 
-import { goSignUp } from '../../navigation'
-
-export default class Login extends React.PureComponent {
+class Login extends React.PureComponent {
     static propTypes = {
         componentId: PropTypes.string.isRequired,
     }
@@ -39,17 +37,12 @@ export default class Login extends React.PureComponent {
     };
 
     onPressLogin = () => {
-        this.props.loginUser(
-            this.state.username,
-            this.state.password
-        )
+        const { username, password } = this.state
+        this.props.loginUser(username, password)
     };
 
     onPressSignUp = () => {
-        // alert('abc')
         const { componentId } = this.props;
-        // console.warn(componentId);
-        goSignUp()
         Navigation.push(componentId, {
             component: {
                 name: 'SignUp',
@@ -59,48 +52,50 @@ export default class Login extends React.PureComponent {
         });
     };
 
-    // renderButtons() {
-    //     if (this.props.auth.loading) {
-    //         return <ActivityIndicator />
-    //     } else {
-    //         return (
-    //             <View>
-    //                 <Button textButton='Login' onPress={this.onPressLogin} />
-    //                 <Button textButton='Signup' onPress={this.onPressSignUp} />
-    //             </View>
-    //         )
-    //     }
-    // };
+    renderButtons() {
+        if (this.props.auth.loading) {
+            return <ActivityIndicator />
+        } else {
+            return (
+                <View>
+                    <Button textButton='Sign In' onPress={this.onPressLogin} />
+                    <Button textButton='Sign Up' onPress={this.onPressSignUp} />
+                </View>
+            )
+        }
+    };
 
     render() {
         const { username, password } = this.state
         return (
             <View style={styles.container}>
                 <Title title="Instagram" />
-                <Input placeholder="email@gmail.com" onChange={this.onChangeUser} value={username} />
+                <Input
+                    placeholder="email@gmail.com"
+                    onChange={this.onChangeUsername}
+                    value={username}
+                />
                 <Input
                     placeholder="password"
                     secureTextEntry
                     onChange={this.onChangePassword}
                     value={password}
                 />
-                {/* <Text>{this.props.auth.errorLogin}</Text> */}
-                {/* {this.renderButtons()} */}
-                <Button textButton='Login' onPress={this.onPressLogin} />
-                <Button textButton='Sign Up' onPress={this.onPressSignUp} />
+                {this.renderButtons()}
             </View>
         );
     }
 }
 
-// const mapStateToProps = state => ({
-//     auth: state.auth
-// });
+const mapStateToProps = state => ({
+    auth: state.auth
+});
 
-// export default connect(
-//     mapStateToProps,
-//     { loginUser }
-// )(Login);
+export default connect(
+    mapStateToProps,
+    { loginUser }
+)(Login);
+
 
 const styles = StyleSheet.create({
     container: {

@@ -65,4 +65,26 @@ export const goSignUp = () => Navigation.setRoot({
   },
 });
 
+export const goHome = () => Navigation.setRoot({
+  root: {
+    stack: {
+      id: 'App',
+      children: [
+        { 
+          component: {
+            name: 'Home',
+            options: {
+              topBar: {
+                visible: false,
+                drawBehind: true,
+                animate: false,
+              },
+            },
+          },
+        },
+      ],
+    },
+  },
+});
+
 

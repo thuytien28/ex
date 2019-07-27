@@ -8,14 +8,15 @@ import {
 } from 'react-native';
 import { Navigation } from 'react-native-navigation';
 import { connect } from 'react-redux';
+import * as actions from '../../actions/AuthActions';
 
 import Button from '../common/Button';
 import Input from '../common/Input';
 import Title from '../common/Title';
 
-import { goLogin } from '../../navigation'
+import { createUser } from '../../actions/AuthActions';
 
-export default class SignUp extends React.PureComponent {
+class SignUp extends React.PureComponent {
     state = {
         username: '',
         password: '',
@@ -34,24 +35,36 @@ export default class SignUp extends React.PureComponent {
     };
 
     onPressLogin = () => {
-        goLogin()
+        const { componentId } = this.props;
+        Navigation.push(componentId, {
+            component: {
+                name: 'Login',
+                passProps: {
+                },
+            },
+        });
     };
 
     onPressSignUp = () => {
+        const { username, password } = this.state;
+        this.props.createUser(username, password)
+
+        // .then((result) => {
+        //     console.warn(result);
+        // })
     };
 
-    // renderButtons() {
-    //     if (this.props.auth.loading) {
-    //         return <ActivityIndicator />
-    //     } else {
-    //         return (
-    //             <View>
-    //                 <Button textButton='Login' onPress={this.onPressLogin} />
-    //                 <Button textButton='Signup' onPress={this.onPressSignUp} />
-    //             </View>
-    //         )
-    //     }
-    // };
+    renderButtons() {
+        if (this.props.auth.loading) {
+            return <ActivityIndicator />
+        } else {
+            return (
+                <View>
+                    <Button textButton='Sign Up' onPress={this.onPressSignUp} />
+                </View>
+            )
+        }
+    };
 
     render() {
         const { username, password } = this.state
@@ -60,7 +73,7 @@ export default class SignUp extends React.PureComponent {
                 <Title title="Instagram" />
                 <Input
                     placeholder="email@gmail.com"
-                    onChange={this.onChangeUser}
+                    onChange={this.onChangeUsername}
                     value={username} />
                 <Input
                     placeholder="password"
@@ -68,7 +81,7 @@ export default class SignUp extends React.PureComponent {
                     onChange={this.onChangePassword}
                     value={password}
                 />
-                <Button textButton='Sign Up' onPress={this.onPressSignUp} />
+                {this.renderButtons()}
                 <TouchableOpacity
                     onPress={this.onPressLogin}
                 >
@@ -83,14 +96,14 @@ export default class SignUp extends React.PureComponent {
     }
 }
 
-// const mapStateToProps = state => ({
-//     auth: state.auth
-// });
+const mapStateToProps = state => ({
+    auth: state.auth
+});
 
-// export default connect(
-//     mapStateToProps,
-//     { loginUser }
-// )(Login);
+export default connect(
+    mapStateToProps,
+    { createUser }
+)(SignUp);
 
 const styles = StyleSheet.create({
     container: {
